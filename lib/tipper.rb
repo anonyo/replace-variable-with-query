@@ -1,30 +1,18 @@
-class Tipper
-  TAX = 0.05
-
-  def initialize(args)
-    args = default args
-    @amount = args[:amount]
-    @discount_percentage = args[:discount_percentage]
-    @tip_percentage = args[:tip_percentage]
-  end
-
-  def default(args)
-    {discount_percentage: 0}.merge args
-  end
+class Tipper < Base
 
   def total
-    amount + tax - calculate(discount_percentage) + calculate(tip_percentage)
+    total_calculator.calculate
   end
 
   private
 
-  attr_reader :amount, :discount_percentage, :tip_percentage
-
-  def tax
-    (amount * TAX)
+  def total_calculator
+    TotalCalculator.new(tipper_args)
   end
 
-  def calculate(percentage)
-    (amount * (percentage / 100.0))
+  def tipper_args
+    { amount: amount, discount_percentage:
+      discount_percentage,
+      tip_percentage: tip_percentage }
   end
 end
