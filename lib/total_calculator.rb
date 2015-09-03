@@ -1,26 +1,21 @@
 class TotalCalculator < Base
-  TAX = 0.05
 
   def calculate
-    amount_with_tax - discount_amount + tip_amount
+    amount_with_tax.calculate - discount_amount.calculate + tip_amount.calculate
   end
 
   private
 
   def amount_with_tax
-    amount + amount * TAX
+    Tax.new(amount)
   end
 
   def discount_amount
-    convert_num(discount_percentage)
+    AmountPercentage.new(amount, discount_percentage)
   end
 
   def tip_amount
-    convert_num(tip_percentage)
-  end
-
-  def convert_num(percentage)
-    (amount * (percentage / 100.0))
+    AmountPercentage.new(amount, tip_percentage)
   end
 end
 
