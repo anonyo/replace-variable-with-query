@@ -1,10 +1,15 @@
 class Tipper
   TAX = 0.05
 
-  def initialize(amount:, discount_percentage: 0, tip_percentage:)
-    @amount = amount
-    @discount_percentage = discount_percentage
-    @tip_percentage = tip_percentage
+  def initialize(args)
+    args = default args
+    @amount = args[:amount]
+    @discount_percentage = args[:discount_percentage]
+    @tip_percentage = args[:tip_percentage]
+  end
+
+  def default(args)
+    {discount_percentage: 0}.merge args
   end
 
   def total
@@ -22,3 +27,4 @@ class Tipper
   def calculate(percentage)
     (amount * (percentage / 100.0))
   end
+end
